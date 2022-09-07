@@ -1,2 +1,7 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/leovas1972/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/leovas1972/frontend-project-46/actions)
+
+```
+gendiff -h
+```
+[![asciicast](https://asciinema.org/a/GSb3d329eUU7dJf5wUgzHzlaQ.svg)](https://asciinema.org/a/GSb3d329eUU7dJf5wUgzHzlaQ)
