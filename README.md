@@ -5,3 +5,7 @@
 gendiff -h
 ```
 [![asciicast](https://asciinema.org/a/GSb3d329eUU7dJf5wUgzHzlaQ.svg)](https://asciinema.org/a/GSb3d329eUU7dJf5wUgzHzlaQ)
+
+### Сравнение плоских файлов (JSON)
+
+[![asciicast](https://asciinema.org/a/qwQwUjB93Ge9Ez7vbcGpua8rr.svg)](https://asciinema.org/a/qwQwUjB93Ge9Ez7vbcGpua8rr)
