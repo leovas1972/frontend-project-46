@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import findDifference from '../src/index.js'
+import findDifference from '../src/index.js';
 
 const program = new Command();
 
@@ -13,4 +13,4 @@ program
   .action((filepath1, filepath2) => {
     console.log(findDifference(filepath1, filepath2));
   });
-  program.parse(process.argv);
+program.parse(process.argv);

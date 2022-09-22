@@ -10,14 +10,14 @@ const buildTree = (fileData1, fileData2) => {
     if (!_.has(fileData2, key)) {
       return [`-${key}`, fileData1[key]];
     }
-    
+
     if (_.isEqual(fileData1[key], fileData2[key])) {
       return [`${key}`, fileData1[key]];
     }
-    return [[`-${key}`, fileData1[key]], [`+${key}`, fileData2[key]]].flat()
-  }); 
-  const newTree = _.chunk((tree.flat()),2);
-  const newObject = Object.fromEntries(newTree)
+    return [[`-${key}`, fileData1[key]], [`+${key}`, fileData2[key]]].flat();
+  });
+  const newTree = _.chunk((tree.flat()), 2);
+  const newObject = Object.fromEntries(newTree);
   return newObject;
 };
 
