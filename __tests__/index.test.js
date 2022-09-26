@@ -1,12 +1,12 @@
-//import { fileURLToPath } from 'url';
-//import path, { dirname } from 'path';
-import { buildFullPath } from '../src/utils.js'
+// import { fileURLToPath } from 'url';
+// import path, { dirname } from 'path';
 import { describe, expect, test } from '@jest/globals';
+import { buildFullPath } from '../src/utils.js';
 import findDifference from '../src/index.js';
 
-//const __filename = fileURLToPath(import.meta.url);
-//const __dirname = dirname(__filename);
-//const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
+// const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 
 describe('Test for JSON file', () => {
   const fileJson1 = buildFullPath('file1.json');
