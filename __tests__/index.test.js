@@ -17,3 +17,20 @@ describe('Test for JSON file', () => {
     });
   });
 });
+
+describe('Test for YML file', () => {
+  const fileYml1 = 'file1.yml';
+  const fileYml2 = 'file2.yml';
+
+  test('testing function findDifference', () => {
+    const actual = findDifference(fileYml1, fileYml2);
+    expect(actual).toEqual({
+      '-follow': false,
+      host: 'hexlet.io',
+      '-proxy': '123.234.53.22',
+      '-timeout': 50,
+      '+timeout': 20,
+      '+verbose': true,
+    });
+  });
+});
