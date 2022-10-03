@@ -5,20 +5,23 @@ const buildTree = (fileData1, fileData2) => {
   const sortedKeys = _.sortBy(keys);
   const tree = sortedKeys.map((key) => {
     if (!_.has(fileData1, key)) {
-      return [`+${key}`, fileData2[key]];
+      return { type: 'add', key, val: fileData2[key] };
     }
     if (!_.has(fileData2, key)) {
-      return [`-${key}`, fileData1[key]];
+      return { type: 'remove', key, val: fileData1[key] };
     }
-
-    if (_.isEqual(fileData1[key], fileData2[key])) {
-      return [`${key}`, fileData1[key]];
+    if (_.isPlainObject(fileData1[key]) && _.isPlainObject(fileData2[key])) {
+      return { type: 'nested', key, children: buildTree(fileData1[key], fileData2[key]) };
     }
-    return [[`-${key}`, fileData1[key]], [`+${key}`, fileData2[key]]].flat();
+    if (!_.isEqual(fileData1[key], fileData2[key])) {
+      return {
+        type: 'updated', key, val1: fileData1[key], val2: fileData2[key],
+      };
+    }
+    return { type: 'notUpdated', key, val: fileData1[key] };
   });
-  const newTree = _.chunk((tree.flat()), 2);
-  const newObject = Object.fromEntries(newTree);
-  return newObject;
+
+  return tree;
 };
 
 export default buildTree;
