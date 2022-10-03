@@ -13,3 +13,7 @@ gendiff -h
 ### Сравнение плоских файлов (JSON)
 
 [![asciicast](https://asciinema.org/a/qwQwUjB93Ge9Ez7vbcGpua8rr.svg)](https://asciinema.org/a/qwQwUjB93Ge9Ez7vbcGpua8rr)
+
+### Сравнение плоских файлов (JSON, YML)
+
+[![asciicast](https://asciinema.org/a/o6D9Qx4eYME22mZ4ZPSX7arVq.svg)](https://asciinema.org/a/o6D9Qx4eYME22mZ4ZPSX7arVq)
