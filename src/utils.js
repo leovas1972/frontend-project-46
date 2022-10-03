@@ -5,14 +5,7 @@ export const buildFullPath = (filename) => path.join(path.resolve(process.cwd())
 
 export const readFile = (filePath) => fs.readFileSync(filePath, 'utf-8');
 
-/* export const defineFileType = (filePath) => {
+export const defineFileType = (filePath) => {
   const fileType = path.extname(filePath).slice(1);
   return fileType;
-}; */
-
-/* export const parseFile = (fileFormat, data) => {
-  if (fileFormat) {
-    return JSON.parse(data);
-  }
-}; */
-export const parseFile = (data) => JSON.parse(data);
+};
