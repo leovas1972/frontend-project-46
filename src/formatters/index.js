@@ -5,8 +5,6 @@ const format = (type, treeOfDifference) => {
     case 'stylish':
       return stylish(treeOfDifference);
     case 'json':
-      console.log('$', JSON.stringify(treeOfDifference));
-
       return JSON.stringify(treeOfDifference);
     default:
       throw new Error(`${type} is wrong format type`);
