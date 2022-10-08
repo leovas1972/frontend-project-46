@@ -1,36 +1,23 @@
-import { describe, expect, test } from '@jest/globals';
+import { test, expect, describe } from '@jest/globals';
 import findDifference from '../src/index.js';
+import { json, stylish, yml } from '../__fixtures__/result.js';
 
-describe('Test for JSON file', () => {
-  const fileJson1 = 'file1.json';
-  const fileJson2 = 'file2.json';
+const fileJson1 = 'file1.json';
+const fileJson2 = 'file2.json';
+const fileYaml1 = 'file1.yml';
+const fileYaml2 = 'file2.yml';
 
-  test('testing function findDifference', () => {
-    const actual = findDifference(fileJson1, fileJson2);
-    expect(actual).toEqual({
-      '-follow': false,
-      host: 'hexlet.io',
-      '-proxy': '123.234.53.22',
-      '-timeout': 50,
-      '+timeout': 20,
-      '+verbose': true,
-    });
+const stylishFormat = 'stylish';
+const jsonFormat = 'json';
+
+describe('stylish output', () => {
+  test('stylish files', () => {
+    expect(findDifference(fileJson1, fileJson2, stylishFormat)).toBe(stylish);
   });
-});
-
-describe('Test for YML file', () => {
-  const fileYml1 = 'file1.yml';
-  const fileYml2 = 'file2.yml';
-
-  test('testing function findDifference', () => {
-    const actual = findDifference(fileYml1, fileYml2);
-    expect(actual).toEqual({
-      '-follow': false,
-      host: 'hexlet.io',
-      '-proxy': '123.234.53.22',
-      '-timeout': 50,
-      '+timeout': 20,
-      '+verbose': true,
-    });
+  test('json files ', () => {
+    expect(findDifference(fileJson1, fileJson2, jsonFormat)).toBe(json);
+  });
+  test('yaml files', () => {
+    expect(findDifference(fileYaml1, fileYaml2, stylishFormat)).toBe(yml);
   });
 });
