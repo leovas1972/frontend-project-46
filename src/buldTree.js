@@ -1,27 +1,52 @@
 import _ from 'lodash';
 
 const buildTree = (fileData1, fileData2) => {
-  const keys = _.union(_.keys(fileData1), _.keys(fileData2));
-  const sortedKeys = _.sortBy(keys);
-  const tree = sortedKeys.map((key) => {
-    if (!_.has(fileData1, key)) {
-      return { type: 'add', key, val: fileData2[key] };
-    }
-    if (!_.has(fileData2, key)) {
-      return { type: 'remove', key, val: fileData1[key] };
-    }
-    if (_.isPlainObject(fileData1[key]) && _.isPlainObject(fileData2[key])) {
-      return { type: 'nested', key, children: buildTree(fileData1[key], fileData2[key]) };
-    }
-    if (!_.isEqual(fileData1[key], fileData2[key])) {
+  const keys = _.sortBy(_.union(_.keys(fileData1), _.keys(fileData2)));
+  const result = keys.map((key) => {
+    const valueData1 = fileData1[key];
+    const valueData2 = fileData2[key];
+
+    if (typeof valueData1 === 'object' && typeof valueData2 === 'object') {
       return {
-        type: 'updated', key, val1: fileData1[key], val2: fileData2[key],
+        name: key,
+        type: 'nested',
+        value: buildTree(valueData1, valueData2),
       };
     }
-    return { type: 'notUpdated', key, val: fileData1[key] };
+    if (_.has(fileData1, key) && _.has(fileData2, key)) {
+      if (valueData1 === valueData2) {
+        return {
+          name: key,
+          type: 'unchanged',
+          value: valueData1,
+        };
+      }
+      if (valueData1 !== valueData2) {
+        return {
+          name: key,
+          type: 'changed',
+          value: [valueData1, valueData2],
+        };
+      }
+    }
+    if (_.has(fileData1, key) && !_.has(fileData2, key)) {
+      return {
+        name: key,
+        type: 'removed',
+        value: valueData1,
+      };
+    }
+    if (!_.has(fileData1, key) && _.has(fileData2, key)) {
+      return {
+        name: key,
+        type: 'added',
+        value: valueData2,
+      };
+    }
+    return null;
   });
 
-  return tree;
+  return result;
 };
 
 export default buildTree;
