@@ -1,45 +1,58 @@
 import _ from 'lodash';
 
-const indent = (depth, str = ' ', spacesCount = 4) => str.repeat((depth * spacesCount) - 2);
+const getDataFromObject = (obj, depth) => {
+  const entries = Object.entries(obj);
 
-const makeString = (value, depth = 1) => {
-  if (!_.isObject(value)) {
-    return value;
-  }
-  const keys = Object.keys(value);
+  const result = entries.map(([key, value]) => {
+    const fourSpace = '    ';
+    const tab = fourSpace.repeat(depth);
+    if (_.isPlainObject(value)) {
+      return `${tab}${key}: {\n${getDataFromObject(value, depth + 1)}\n${tab}}`;
+    }
 
-  const result = keys.map((key) => {
-    const newKey = value[key];
-
-    return `${indent(depth + 1)}  ${key}: ${makeString(newKey, depth + 1)}`;
+    return `${tab}${key}: ${value}`;
   });
 
-  return `{\n${result.join('\n')}\n  ${indent(depth)}}`;
+  return result.join('\n');
 };
 
 const stylish = (data) => {
-  const iter = (node, depth = 1) => {
-    const result = node.map((item) => {
-      switch (item.type) {
-        case 'nested': {
-          return `${indent(depth)}  ${item.key}: {\n${iter(item.children, depth + 1)}\n${indent(depth)}  }`;
-        }
-        case 'remove':
-          return `${indent(depth)}- ${item.key}: ${makeString(item.val, depth)}`;
-        case 'add':
+  const iter = (arr, depth) => {
+    const fourSpace = '    ';
+    const tab = fourSpace.repeat(depth);
+    const tabRemove = `${fourSpace.repeat(depth).slice(0, -2)}- `;
+    const tabAdd = `${fourSpace.repeat(depth).slice(0, -2)}+ `;
 
-          return `${indent(depth)}+ ${item.key}: ${makeString(item.val, depth)}`;
-        case 'updated':
-
-          return (`${indent(depth)}- ${item.key}: ${makeString(item.val1, depth)}\n${indent(depth)}+ ${item.key}: ${makeString(item.val2, depth)}`);
-        case 'notUpdated':
-          return `${indent(depth)}  ${item.key}: ${makeString(item.val, depth)}`;
-        default:
-          throw new Error(`Unknown type ${item.type}`);
+    const result = arr.map((item) => {
+      if (item.type === 'nested') {
+        return `${tab}${item.name}: {\n${iter(item.value, depth + 1)}\n${tab}}`;
       }
+
+      if (item.type === 'changed') {
+        const deletedValue = _.isPlainObject(item.value[0]) ? `{\n${getDataFromObject(item.value[0], depth + 1)}\n${tab}}` : `${item.value[0]}`;
+        const addedValue = _.isPlainObject(item.value[1]) ? `{\n${getDataFromObject(item.value[1], depth + 1)}\n${tab}}` : `${item.value[1]}`;
+
+        return `${tabRemove}${item.name}: ${deletedValue}\n${tabAdd}${item.name}: ${addedValue}`;
+      }
+
+      if (item.type === 'added') {
+        const value = _.isPlainObject(item.value) ? `{\n${getDataFromObject(item.value, depth + 1)}\n${tab}}` : `${item.value}`;
+
+        return `${tabAdd}${item.name}: ${value}`;
+      }
+
+      if (item.type === 'removed') {
+        const value = _.isPlainObject(item.value) ? `{\n${getDataFromObject(item.value, depth + 1)}\n${tab}}` : `${item.value}`;
+        return `${tabRemove}${item.name}: ${(value)}`;
+      }
+
+      return `${tab}${item.name}: ${item.value}`;
     });
+
     return result.join('\n');
   };
-  return `{\n${iter(data)}\n}`;
+
+  return `{\n${iter(data, 1)}\n}`;
 };
+
 export default stylish;
