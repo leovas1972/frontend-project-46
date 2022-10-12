@@ -10,10 +10,22 @@ gendiff -h
 ```
 [![asciicast](https://asciinema.org/a/GSb3d329eUU7dJf5wUgzHzlaQ.svg)](https://asciinema.org/a/GSb3d329eUU7dJf5wUgzHzlaQ)
 
-### Сравнение плоских файлов (JSON)
+### Flat file comparison (JSON)
 
 [![asciicast](https://asciinema.org/a/qwQwUjB93Ge9Ez7vbcGpua8rr.svg)](https://asciinema.org/a/qwQwUjB93Ge9Ez7vbcGpua8rr)
 
-### Сравнение плоских файлов (JSON, YML)
+### Flat file comparison (JSON, YML)
 
 [![asciicast](https://asciinema.org/a/o6D9Qx4eYME22mZ4ZPSX7arVq.svg)](https://asciinema.org/a/o6D9Qx4eYME22mZ4ZPSX7arVq)
+
+### Stylish format output
+
+[![asciicast](https://asciinema.org/a/K9rlgJxDdX7HaBk7akCuQZzHJ.svg)](https://asciinema.org/a/K9rlgJxDdX7HaBk7akCuQZzHJ)
+
+### Plain format output
+
+[![asciicast](https://asciinema.org/a/Y4CzYKWbIKovW4C6wLB8IesBm.svg)](https://asciinema.org/a/Y4CzYKWbIKovW4C6wLB8IesBm)
+
+### Json format output
+
+[![asciicast](https://asciinema.org/a/6h0a5VJyNhl0J67n5sfvzQiJz.svg)](https://asciinema.org/a/6h0a5VJyNhl0J67n5sfvzQiJz)
