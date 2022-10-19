@@ -1,49 +1,24 @@
 import _ from 'lodash';
 
-const buildTree = (fileData1, fileData2) => {
-  const keys = _.sortBy(_.union(_.keys(fileData1), _.keys(fileData2)));
+const buildTree = (data1, data2) => {
+  const keys = _.sortBy(_.union(_.keys(data1), _.keys(data2)));
   const result = keys.map((key) => {
-    const valueData1 = fileData1[key];
-    const valueData2 = fileData2[key];
+    const value1 = data1[key];
+    const value2 = data2[key];
 
-    if (typeof valueData1 === 'object' && typeof valueData2 === 'object') {
-      return {
-        name: key,
-        type: 'nested',
-        value: buildTree(valueData1, valueData2),
-      };
+    if (typeof value1 === 'object' && typeof value2 === 'object') {
+      return { name: key, type: 'nested', value: buildTree(value1, value2) };
     }
-    if (_.has(fileData1, key) && _.has(fileData2, key)) {
-      if (valueData1 === valueData2) {
-        return {
-          name: key,
-          type: 'unchanged',
-          value: valueData1,
-        };
-      }
-      if (valueData1 !== valueData2) {
-        return {
-          name: key,
-          type: 'changed',
-          value: [valueData1, valueData2],
-        };
-      }
+    if (_.has(data1, key) && !_.has(data2, key)) {
+      return { name: key, type: 'removed', value: value1 };
     }
-    if (_.has(fileData1, key) && !_.has(fileData2, key)) {
-      return {
-        name: key,
-        type: 'removed',
-        value: valueData1,
-      };
+    if (!_.has(data1, key) && _.has(data2, key)) {
+      return { name: key, type: 'added', value: value2 };
     }
-    if (!_.has(fileData1, key) && _.has(fileData2, key)) {
-      return {
-        name: key,
-        type: 'added',
-        value: valueData2,
-      };
+    if (value1 !== value2) {
+      return { name: key, type: 'changed', value: [value1, value2] };
     }
-    return null;
+    return { name: key,type: 'unchanged', value: value1 };
   });
 
   return result;
