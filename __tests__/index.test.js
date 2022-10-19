@@ -2,6 +2,7 @@ import { test, expect, describe } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import fs from 'fs';
+import { json, yml } from '../__fixtures__/result.js';
 import findDifference from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -11,8 +12,6 @@ const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8'
 
 const stylish = readFile('stylish.txt');
 const plain = readFile('plain.txt');
-const json = readFile('json.txt');
-const yml = readFile('yml.txt');
 
 const fileJson1 = 'file1.json';
 const fileJson2 = 'file2.json';
