@@ -7,18 +7,20 @@ const buildTree = (data1, data2) => {
     const value2 = data2[key];
 
     if (typeof value1 === 'object' && typeof value2 === 'object') {
-      return { name: key, type: 'nested', value: buildTree(value1, value2) };
+      return { key, type: 'nested', children: buildTree(value1, value2) };
     }
     if (_.has(data1, key) && !_.has(data2, key)) {
-      return { name: key, type: 'removed', value: value1 };
+      return { key, type: 'removed', value: value1 };
     }
     if (!_.has(data1, key) && _.has(data2, key)) {
-      return { name: key, type: 'added', value: value2 };
+      return { key, type: 'added', value: value2 };
     }
     if (value1 !== value2) {
-      return { name: key, type: 'changed', value: [value1, value2] };
+      return {
+        key, type: 'changed', removedValue: value1, addedValue: value2,
+      }; // value: [value1, value2]
     }
-    return { name: key,type: 'unchanged', value: value1 };
+    return { key, type: 'unchanged', value: value1 };
   });
 
   return result;
