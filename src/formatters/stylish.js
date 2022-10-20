@@ -1,4 +1,3 @@
-
 const getIndent = (depth, spacesCount = 4) => ' '.repeat(depth * spacesCount - 2);
 
 const stringify = (obj, depth = 0) => {
