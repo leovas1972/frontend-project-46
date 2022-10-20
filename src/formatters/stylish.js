@@ -1,58 +1,43 @@
-import _ from 'lodash';
 
-const getDataFromObject = (obj, depth) => {
-  const entries = Object.entries(obj);
+const getIndent = (depth, spacesCount = 4) => ' '.repeat(depth * spacesCount - 2);
 
-  const result = entries.map(([key, value]) => {
-    const fourSpace = '    ';
-    const tab = fourSpace.repeat(depth);
-    if (_.isPlainObject(value)) {
-      return `${tab}${key}: {\n${getDataFromObject(value, depth + 1)}\n${tab}}`;
+const stringify = (obj, depth = 0) => {
+  const iter = (currentValue, currentDepth) => {
+    if (typeof currentValue !== 'object' || currentValue === null) {
+      return String(currentValue);
     }
+    const result = Object.entries(currentValue).map(([key, value]) => {
+      const beginSpace = getIndent(currentDepth + 1);
+      return `${beginSpace}  ${key}: ${stringify(value, currentDepth + 1)}`;
+    });
+    const endSpace = getIndent(currentDepth);
+    return `{\n${result.join('\n')}\n  ${endSpace}}`;
+  };
 
-    return `${tab}${key}: ${value}`;
+  return iter(obj, depth);
+};
+
+const makeTree = (data, depth = 1) => {
+  const typeMap = {
+    nested: ({ key, children }) => {
+      const child = makeTree(children, depth + 1);
+      return `  ${getIndent(depth)}${key}: {\n${child}\n${getIndent(depth)}  }`;
+    },
+    unchanged: ({ key, value }) => `${getIndent(depth)}  ${key}: ${stringify(value, depth)}`,
+    added: ({ key, value }) => `${getIndent(depth)}+ ${key}: ${stringify(value, depth)}`,
+    removed: ({ key, value }) => `${getIndent(depth)}- ${key}: ${stringify(value, depth)}`,
+    changed: ({ key, addedValue, removedValue }) => {
+      const added = `${getIndent(depth)}+ ${key}: ${stringify(addedValue, depth)}`;
+      const removed = `${getIndent(depth)}- ${key}: ${stringify(removedValue, depth)}`;
+      return `${removed}\n${added}`;
+    },
+  };
+  const result = data.map((node) => {
+    const { type } = node;
+    return typeMap[type](node, depth);
   });
-
   return result.join('\n');
 };
 
-const stylish = (data) => {
-  const iter = (arr, depth) => {
-    const fourSpace = '    ';
-    const tab = fourSpace.repeat(depth);
-    const tabRemove = `${fourSpace.repeat(depth).slice(0, -2)}- `;
-    const tabAdd = `${fourSpace.repeat(depth).slice(0, -2)}+ `;
-
-    const result = arr.map((item) => {
-      if (item.type === 'nested') {
-        return `${tab}${item.name}: {\n${iter(item.value, depth + 1)}\n${tab}}`;
-      }
-
-      if (item.type === 'changed') {
-        const deletedValue = _.isPlainObject(item.value[0]) ? `{\n${getDataFromObject(item.value[0], depth + 1)}\n${tab}}` : `${item.value[0]}`;
-        const addedValue = _.isPlainObject(item.value[1]) ? `{\n${getDataFromObject(item.value[1], depth + 1)}\n${tab}}` : `${item.value[1]}`;
-
-        return `${tabRemove}${item.name}: ${deletedValue}\n${tabAdd}${item.name}: ${addedValue}`;
-      }
-
-      if (item.type === 'added') {
-        const value = _.isPlainObject(item.value) ? `{\n${getDataFromObject(item.value, depth + 1)}\n${tab}}` : `${item.value}`;
-
-        return `${tabAdd}${item.name}: ${value}`;
-      }
-
-      if (item.type === 'removed') {
-        const value = _.isPlainObject(item.value) ? `{\n${getDataFromObject(item.value, depth + 1)}\n${tab}}` : `${item.value}`;
-        return `${tabRemove}${item.name}: ${(value)}`;
-      }
-
-      return `${tab}${item.name}: ${item.value}`;
-    });
-
-    return result.join('\n');
-  };
-
-  return `{\n${iter(data, 1)}\n}`;
-};
-
+const stylish = (data) => `{\n${makeTree(data)}\n}`;
 export default stylish;
