@@ -2,7 +2,6 @@ import { test, expect, describe } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import fs from 'fs';
-import { json, yml } from '../__fixtures__/result.js';
 import findDifference from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -12,6 +11,7 @@ const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8'
 
 const stylish = readFile('stylish.txt');
 const plain = readFile('plain.txt');
+const stringJSON = readFile('stringJSON.txt');
 
 const fileJson1 = 'file1.json';
 const fileJson2 = 'file2.json';
@@ -30,10 +30,10 @@ describe('output formats', () => {
     expect(findDifference(fileJson1, fileJson2)).toBe(stylish);
   });
   test('json files string', () => {
-    expect(findDifference(fileJson1, fileJson2, jsonFormat)).toBe(json);
+    expect(findDifference(fileJson1, fileJson2, jsonFormat)).toBe(stringJSON);
   });
   test('yaml files', () => {
-    expect(findDifference(fileYaml1, fileYaml2, stylishFormat)).toBe(yml);
+    expect(findDifference(fileYaml1, fileYaml2, stylishFormat)).toBe(stylish);
   });
   test('plain files', () => {
     expect(findDifference(fileJson1, fileJson2, plainFormat)).toBe(plain);
