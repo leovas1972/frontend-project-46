@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 
-export const buildFullPath = (filename) => path.join(path.resolve(process.cwd()), '/__fixtures__', filename);
+export const buildFullPath = (filename) => path.resolve(process.cwd(), '__fixtures__', filename);
 
 export const readFile = (filePath) => fs.readFileSync(filePath, 'utf-8');
 
