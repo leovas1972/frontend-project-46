@@ -11,12 +11,7 @@ const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8'
 
 const stylish = readFile('stylish.txt');
 const plain = readFile('plain.txt');
-const stringJSON = readFile('stringJSON.txt');
-
-const fileJson1 = 'file1.json';
-const fileJson2 = 'file2.json';
-const fileYaml1 = 'file1.yml';
-const fileYaml2 = 'file2.yml';
+const json = readFile('json.txt');
 
 const stylishFormat = 'stylish';
 const jsonFormat = 'json';
@@ -24,18 +19,18 @@ const plainFormat = 'plain';
 
 describe('output formats', () => {
   test('stylish files', () => {
-    expect(findDifference(fileJson1, fileJson2, stylishFormat)).toBe(stylish);
+    expect(findDifference('file1.json', 'file2.json', stylishFormat)).toBe(stylish);
   });
   test('json files default', () => {
-    expect(findDifference(fileJson1, fileJson2)).toBe(stylish);
+    expect(findDifference('file1.json', 'file2.json')).toBe(stylish);
   });
   test('json files string', () => {
-    expect(findDifference(fileJson1, fileJson2, jsonFormat)).toBe(stringJSON);
+    expect(findDifference('file1.json', 'file2.json', jsonFormat)).toBe(json);
   });
   test('yaml files', () => {
-    expect(findDifference(fileYaml1, fileYaml2, stylishFormat)).toBe(stylish);
+    expect(findDifference('file1.yml', 'file2.yml', stylishFormat)).toBe(stylish);
   });
   test('plain files', () => {
-    expect(findDifference(fileJson1, fileJson2, plainFormat)).toBe(plain);
+    expect(findDifference('file1.json', 'file2.json', plainFormat)).toBe(plain);
   });
 });
