@@ -1,4 +1,6 @@
-import { test, expect, describe, it } from '@jest/globals';
+import {
+  expect, describe, it,
+} from '@jest/globals';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import fs from 'fs';
@@ -18,19 +20,18 @@ describe('output formats', () => {
     expect(genDiff('file1.json', 'file2.json')).toBe(stylish);
     expect(genDiff('file1.json', 'file2.json', 'stylish')).toBe(stylish);
     expect(genDiff('file1.json', 'file2.json', 'json')).toBe(json);
-  })
+  });
 });
 
-describe('output formats', () => {
+describe('output formats yml', () => {
   it('yml', () => {
     expect(genDiff('file1.yml', 'file2.yml')).toBe(stylish);
     expect(genDiff('file1.yml', 'file2.yml', 'stylish')).toBe(stylish);
-  })
+  });
 });
 
-describe('output formats', () => {
+describe('output formats plain', () => {
   it('plain', () => {
     expect(genDiff('file1.json', 'file2.json', 'plain')).toBe(plain);
-  })
+  });
 });
-
