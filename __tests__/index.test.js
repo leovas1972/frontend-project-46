@@ -2,7 +2,7 @@ import { test, expect, describe } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import fs from 'fs';
-import findDifference from '../src/index.js';
+import genDiff from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -15,18 +15,18 @@ const json = readFile('json.txt');
 
 describe('output formats', () => {
   test('stylish files', () => {
-    expect(findDifference('file1.json', 'file2.json', 'stylish')).toBe(stylish);
+    expect(genDiff('file1.json', 'file2.json', 'stylish')).toBe(stylish);
   });
   test('json files default', () => {
-    expect(findDifference('file1.json', 'file2.json')).toBe(stylish);
+    expect(genDiff('file1.json', 'file2.json')).toBe(stylish);
   });
   test('json files string', () => {
-    expect(findDifference('file1.json', 'file2.json', 'json')).toBe(json);
+    expect(genDiff('file1.json', 'file2.json', 'json')).toBe(json);
   });
   test('yaml files', () => {
-    expect(findDifference('file1.yml', 'file2.yml', 'stylish')).toBe(stylish);
+    expect(genDiff('file1.yml', 'file2.yml', 'stylish')).toBe(stylish);
   });
   test('plain files', () => {
-    expect(findDifference('file1.json', 'file2.json', 'plain')).toBe(plain);
+    expect(genDiff('file1.json', 'file2.json', 'plain')).toBe(plain);
   });
 });

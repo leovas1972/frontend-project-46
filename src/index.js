@@ -6,7 +6,7 @@ import {
 import parseData from './parsers.js';
 import format from './formatters/index.js';
 
-const findDifference = (filepath1, filepath2, type = 'stylish') => {
+const genDiff = (filepath1, filepath2, type = 'stylish') => {
   const filePath1 = buildFullPath(filepath1);
   const filePath2 = buildFullPath(filepath2);
 
@@ -24,4 +24,4 @@ const findDifference = (filepath1, filepath2, type = 'stylish') => {
   return format(type, tree);
 };
 
-export default findDifference;
+export default genDiff;
