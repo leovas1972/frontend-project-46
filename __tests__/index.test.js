@@ -1,4 +1,4 @@
-import { test, expect, describe } from '@jest/globals';
+import { test, expect, describe, it } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import fs from 'fs';
@@ -14,19 +14,23 @@ const plain = readFile('plain.txt');
 const json = readFile('json.txt');
 
 describe('output formats', () => {
-  test('stylish files', () => {
-    expect(genDiff('file1.json', 'file2.json', 'stylish')).toBe(stylish);
-  });
-  test('json files default', () => {
+  it('json', () => {
     expect(genDiff('file1.json', 'file2.json')).toBe(stylish);
-  });
-  test('json files string', () => {
+    expect(genDiff('file1.json', 'file2.json', 'stylish')).toBe(stylish);
     expect(genDiff('file1.json', 'file2.json', 'json')).toBe(json);
-  });
-  test('yaml files', () => {
-    expect(genDiff('file1.yml', 'file2.yml', 'stylish')).toBe(stylish);
-  });
-  test('plain files', () => {
-    expect(genDiff('file1.json', 'file2.json', 'plain')).toBe(plain);
-  });
+  })
 });
+
+describe('output formats', () => {
+  it('yml', () => {
+    expect(genDiff('file1.yml', 'file2.yml')).toBe(stylish);
+    expect(genDiff('file1.yml', 'file2.yml', 'stylish')).toBe(stylish);
+  })
+});
+
+describe('output formats', () => {
+  it('plain', () => {
+    expect(genDiff('file1.json', 'file2.json', 'plain')).toBe(plain);
+  })
+});
+
