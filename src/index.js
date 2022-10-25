@@ -16,7 +16,6 @@ const defineFileType = (filePath) => {
 const getData = (filePath) => parseData(readFile(filePath), defineFileType(filePath));
 
 const genDiff = (filepath1, filepath2, outputFormat = 'stylish') => {
-
   const data1 = getData(buildFullPath(filepath1));
   const data2 = getData(buildFullPath(filepath2));
 
