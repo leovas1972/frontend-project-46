@@ -18,7 +18,7 @@ const buildTree = (data1, data2) => {
     if (value1 !== value2) {
       return {
         key, type: 'changed', removedValue: value1, addedValue: value2,
-      }; // value: [value1, value2]
+      }; 
     }
     return { key, type: 'unchanged', value: value1 };
   });
