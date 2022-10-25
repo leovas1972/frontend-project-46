@@ -1,8 +1,8 @@
 import stylish from './stylish.js';
 import plain from './plain.js';
 
-const format = (type, treeOfDifference) => {
-  switch (type) {
+const format = (outputFormat, treeOfDifference) => {
+  switch (outputFormat) {
     case 'stylish':
       return stylish(treeOfDifference);
     case 'plain':
@@ -10,7 +10,7 @@ const format = (type, treeOfDifference) => {
     case 'json':
       return JSON.stringify(treeOfDifference);
     default:
-      throw new Error(`${type} is wrong format type`);
+      throw new Error(`${outputFormat} is wrong format type`);
   }
 };
 

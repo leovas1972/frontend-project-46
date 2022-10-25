@@ -6,7 +6,7 @@ import {
 import parseData from './parsers.js';
 import format from './formatters/index.js';
 
-const genDiff = (filepath1, filepath2, type = 'stylish') => {
+const genDiff = (filepath1, filepath2, outputFormat = 'stylish') => {
   const filePath1 = buildFullPath(filepath1);
   const filePath2 = buildFullPath(filepath2);
 
@@ -21,7 +21,7 @@ const genDiff = (filepath1, filepath2, type = 'stylish') => {
 
   const tree = buildTree(data1, data2);
 
-  return format(type, tree);
+  return format(outputFormat, tree);
 };
 
 export default genDiff;
