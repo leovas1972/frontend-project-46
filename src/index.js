@@ -1,19 +1,17 @@
 import path from 'path';
-import fs from 'fs';
+import { readFileSync } from 'node:fs';
 import buildTree from './buldTree.js';
 import parseData from './parsers.js';
 import format from './formatters/index.js';
 
 const buildFullPath = (filename) => path.resolve(process.cwd(), '__fixtures__', filename);
 
-const readFile = (filePath) => fs.readFileSync(filePath, 'utf-8');
-
 const defineFileType = (filePath) => {
   const fileType = path.extname(filePath).slice(1);
   return fileType;
 };
 
-const getData = (filePath) => parseData(readFile(filePath), defineFileType(filePath));
+const getData = (filePath) => parseData(readFileSync(filePath, 'utf-8'), defineFileType(filePath));
 
 const genDiff = (filepath1, filepath2, outputFormat = 'stylish') => {
   const data1 = getData(buildFullPath(filepath1));
