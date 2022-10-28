@@ -9,11 +9,11 @@ import genDiff from '../src/index.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
+const readFileFixtures = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
-const resultStylish = readFile('stylish.txt');
-const resultPlain = readFile('plain.txt');
-const resultJson = readFile('json.txt');
+const resultStylish = readFileFixtures('stylish.txt');
+const resultPlain = readFileFixtures('plain.txt');
+const resultJson = readFileFixtures('json.txt');
 
 describe('genDiff', () => {
   it('json', () => {
