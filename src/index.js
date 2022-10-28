@@ -6,12 +6,9 @@ import format from './formatters/index.js';
 
 const buildFullPath = (filename) => path.resolve(process.cwd(), '__fixtures__', filename);
 
-const defineFileType = (filePath) => {
-  const fileType = path.extname(filePath).slice(1);
-  return fileType;
-};
+const fileType = (filePath) => path.extname(filePath).slice(1);
 
-const getData = (filePath) => parseData(readFileSync(filePath, 'utf-8'), defineFileType(filePath));
+const getData = (filePath) => parseData(readFileSync(filePath, 'utf-8'), fileType(filePath));
 
 const genDiff = (filepath1, filepath2, outputFormat = 'stylish') => {
   const data1 = getData(buildFullPath(filepath1));
