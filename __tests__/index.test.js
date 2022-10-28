@@ -29,6 +29,4 @@ describe('genDiff', () => {
     expect(genDiff('file1.yml', 'file2.yml', 'json')).toBe(json);
     expect(genDiff('file1.yml', 'file2.yml', 'plain')).toBe(plain);
   });
-})
-
-
+});
