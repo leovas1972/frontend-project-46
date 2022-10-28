@@ -15,23 +15,20 @@ const stylish = readFile('stylish.txt');
 const plain = readFile('plain.txt');
 const json = readFile('json.txt');
 
-describe('output formats', () => {
+describe('genDiff', () => {
   it('json', () => {
     expect(genDiff('file1.json', 'file2.json')).toBe(stylish);
     expect(genDiff('file1.json', 'file2.json', 'stylish')).toBe(stylish);
     expect(genDiff('file1.json', 'file2.json', 'json')).toBe(json);
+    expect(genDiff('file1.json', 'file2.json', 'plain')).toBe(plain);
   });
-});
 
-describe('output formats yml', () => {
   it('yml', () => {
     expect(genDiff('file1.yml', 'file2.yml')).toBe(stylish);
     expect(genDiff('file1.yml', 'file2.yml', 'stylish')).toBe(stylish);
+    expect(genDiff('file1.yml', 'file2.yml', 'json')).toBe(json);
+    expect(genDiff('file1.yml', 'file2.yml', 'plain')).toBe(plain);
   });
-});
+})
 
-describe('output formats plain', () => {
-  it('plain', () => {
-    expect(genDiff('file1.json', 'file2.json', 'plain')).toBe(plain);
-  });
-});
+
