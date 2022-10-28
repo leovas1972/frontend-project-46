@@ -1,5 +1,5 @@
 import path from 'path';
-import { readFileSync } from 'node:fs';
+import { readFileSync } from 'fs';
 import buildTree from './buldTree.js';
 import parseData from './parsers.js';
 import format from './formatters/index.js';
