@@ -20,8 +20,8 @@ const plainFormat = (data, ancestors = []) => {
     unchanged: () => null,
     added: ({ value }, path) => `Property '${path.join('.')}' was added with value: ${stringify(value)}`,
     removed: (none, path) => `Property '${path.join('.')}' was removed`,
-    changed: ({ addedValue, removedValue }, path) => (
-      `Property '${path.join('.')}' was updated. From ${stringify(removedValue)} to ${stringify(addedValue)}`),
+    changed: ({ value2, value1 }, path) => (
+      `Property '${path.join('.')}' was updated. From ${stringify(value1)} to ${stringify(value2)}`),
     nested: ({ children }, path) => plainFormat(children, path),
   };
 

@@ -25,9 +25,9 @@ const makeTree = (data, depth = 1) => {
     unchanged: ({ key, value }) => `${getIndent(depth)}  ${key}: ${stringify(value, depth)}`,
     added: ({ key, value }) => `${getIndent(depth)}+ ${key}: ${stringify(value, depth)}`,
     removed: ({ key, value }) => `${getIndent(depth)}- ${key}: ${stringify(value, depth)}`,
-    changed: ({ key, addedValue, removedValue }) => {
-      const added = `${getIndent(depth)}+ ${key}: ${stringify(addedValue, depth)}`;
-      const removed = `${getIndent(depth)}- ${key}: ${stringify(removedValue, depth)}`;
+    changed: ({ key, value2, value1 }) => {
+      const added = `${getIndent(depth)}+ ${key}: ${stringify(value2, depth)}`;
+      const removed = `${getIndent(depth)}- ${key}: ${stringify(value1, depth)}`;
       return `${removed}\n${added}`;
     },
   };
