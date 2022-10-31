@@ -15,14 +15,14 @@ const stringify = (value) => {
   return String(value);
 };
 
-const plain = (data, ancestors = []) => {
+const plainFormat = (data, ancestors = []) => {
   const typeMap = {
     unchanged: () => null,
     added: ({ value }, path) => `Property '${path.join('.')}' was added with value: ${stringify(value)}`,
     removed: (none, path) => `Property '${path.join('.')}' was removed`,
     changed: ({ addedValue, removedValue }, path) => (
       `Property '${path.join('.')}' was updated. From ${stringify(removedValue)} to ${stringify(addedValue)}`),
-    nested: ({ children }, path) => plain(children, path),
+    nested: ({ children }, path) => plainFormat(children, path),
   };
 
   const result = data.map((node) => {
@@ -34,4 +34,4 @@ const plain = (data, ancestors = []) => {
   return _.compact(_.flatten(result)).join('\n');
 };
 
-export default plain;
+export default plainFormat;

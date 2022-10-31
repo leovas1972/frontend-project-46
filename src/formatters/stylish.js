@@ -38,5 +38,5 @@ const makeTree = (data, depth = 1) => {
   return result.join('\n');
 };
 
-const stylish = (data) => `{\n${makeTree(data)}\n}`;
-export default stylish;
+const stylishFormat = (data) => `{\n${makeTree(data)}\n}`;
+export default stylishFormat;
