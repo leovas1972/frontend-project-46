@@ -1,4 +1,4 @@
-const getIndent = (depth, spacesCount = 4) => ' '.repeat(depth * spacesCount - 2);
+const indent = (depth, spacesCount = 4) => ' '.repeat(depth * spacesCount - 2);
 
 const stringify = (obj, depth = 0) => {
   const iter = (currentValue, currentDepth) => {
@@ -6,10 +6,10 @@ const stringify = (obj, depth = 0) => {
       return String(currentValue);
     }
     const result = Object.entries(currentValue).map(([key, value]) => {
-      const beginSpace = getIndent(currentDepth + 1);
+      const beginSpace = indent(currentDepth + 1);
       return `${beginSpace}  ${key}: ${stringify(value, currentDepth + 1)}`;
     });
-    const endSpace = getIndent(currentDepth);
+    const endSpace = indent(currentDepth);
     return `{\n${result.join('\n')}\n  ${endSpace}}`;
   };
 
@@ -20,14 +20,14 @@ const makeTree = (data, depth = 1) => {
   const typeMap = {
     nested: ({ key, children }) => {
       const child = makeTree(children, depth + 1);
-      return `  ${getIndent(depth)}${key}: {\n${child}\n${getIndent(depth)}  }`;
+      return `  ${indent(depth)}${key}: {\n${child}\n${indent(depth)}  }`;
     },
-    unchanged: ({ key, value }) => `${getIndent(depth)}  ${key}: ${stringify(value, depth)}`,
-    added: ({ key, value }) => `${getIndent(depth)}+ ${key}: ${stringify(value, depth)}`,
-    removed: ({ key, value }) => `${getIndent(depth)}- ${key}: ${stringify(value, depth)}`,
+    unchanged: ({ key, value }) => `${indent(depth)}  ${key}: ${stringify(value, depth)}`,
+    added: ({ key, value }) => `${indent(depth)}+ ${key}: ${stringify(value, depth)}`,
+    removed: ({ key, value }) => `${indent(depth)}- ${key}: ${stringify(value, depth)}`,
     changed: ({ key, value2, value1 }) => {
-      const added = `${getIndent(depth)}+ ${key}: ${stringify(value2, depth)}`;
-      const removed = `${getIndent(depth)}- ${key}: ${stringify(value1, depth)}`;
+      const added = `${indent(depth)}+ ${key}: ${stringify(value2, depth)}`;
+      const removed = `${indent(depth)}- ${key}: ${stringify(value1, depth)}`;
       return `${removed}\n${added}`;
     },
   };
