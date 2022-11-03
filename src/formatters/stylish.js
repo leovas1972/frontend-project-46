@@ -1,8 +1,10 @@
+import _ from 'lodash';
+
 const indent = (depth, spacesCount = 4) => ' '.repeat(depth * spacesCount - 2);
 
 const stringify = (data, depth = 0) => {
   const iter = (currentValue, currentDepth) => {
-    if (typeof currentValue !== 'object' || currentValue === null) {
+    if (!_.isObject(currentValue)) {
       return String(currentValue);
     }
     const result = Object.entries(currentValue).map(([key, value]) => {
