@@ -7,6 +7,6 @@ const formats = {
   json: JSON.stringify,
 };
 
-const format = (treeOfDifference, outputFormat) => formats[outputFormat](treeOfDifference);
+const format = (tree, outputFormat) => formats[outputFormat](tree);
 
 export default format;
