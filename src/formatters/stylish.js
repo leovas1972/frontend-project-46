@@ -3,19 +3,15 @@ import _ from 'lodash';
 const indent = (depth, spacesCount = 4) => ' '.repeat(depth * spacesCount - 2);
 
 const stringify = (data, depth = 0) => {
-  const iter = (currentValue, currentDepth) => {
-    if (!_.isObject(currentValue)) {
-      return String(currentValue);
-    }
-    const result = Object.entries(currentValue).map(([key, value]) => {
-      const beginSpace = indent(currentDepth + 1);
-      return `${beginSpace}  ${key}: ${stringify(value, currentDepth + 1)}`;
-    });
-    const endSpace = indent(currentDepth);
-    return `{\n${result.join('\n')}\n  ${endSpace}}`;
-  };
-
-  return iter(data, depth);
+  if (!_.isObject(data)) {
+    return String(data);
+  }
+  const result = Object.entries(data).map(([key, value]) => {
+    const beginSpace = indent(depth + 1);
+    return `${beginSpace}  ${key}: ${stringify(value, depth + 1)}`;
+  });
+  const endSpace = indent(depth);
+  return `{\n${result.join('\n')}\n  ${endSpace}}`;
 };
 
 const makeTree = (data, depth = 1) => {
