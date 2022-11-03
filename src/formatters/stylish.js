@@ -1,6 +1,6 @@
 const indent = (depth, spacesCount = 4) => ' '.repeat(depth * spacesCount - 2);
 
-const stringify = (obj, depth = 0) => {
+const stringify = (data, depth = 0) => {
   const iter = (currentValue, currentDepth) => {
     if (typeof currentValue !== 'object' || currentValue === null) {
       return String(currentValue);
@@ -13,7 +13,7 @@ const stringify = (obj, depth = 0) => {
     return `{\n${result.join('\n')}\n  ${endSpace}}`;
   };
 
-  return iter(obj, depth);
+  return iter(data, depth);
 };
 
 const makeTree = (data, depth = 1) => {
